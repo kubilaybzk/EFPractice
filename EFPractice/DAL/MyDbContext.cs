@@ -11,7 +11,6 @@ namespace EFPractice.DAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=192.168.16.94;Initial Catalog=EFPractice;User ID=SA;Password=Password123;TrustServerCertificate=True");
-            base.OnConfiguring(optionsBuilder);
         }
     }
 }
