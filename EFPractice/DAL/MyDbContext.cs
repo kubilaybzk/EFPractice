@@ -1,4 +1,5 @@
 ﻿using EFPractice.Entities;
+using EFPractice.Entities.Mapping;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,11 +16,8 @@ namespace EFPractice.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Bu şekilde constraint tanımlamaları fluent api ile yapılıyor . 
-
-            modelBuilder.Entity<Book>().HasKey(b => b.BookId); //Burada buranın primary key olduğunu belirtiyoruz.
-            
-            modelBuilder.Entity<Book>().Property(b => b.Title).IsRequired().HasMaxLength(150); //Burada required bir değer olduğunu ve maxsimum 150 karakter olmasını set ediyoruz.
+            //Model Mapping kısmını entegre edelim.
+            modelBuilder.ApplyConfiguration(new BookMap());
         }
     }
 }
