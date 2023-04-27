@@ -16,7 +16,7 @@ namespace EFPractice.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Model Mapping kısmını entegre edelim.
+            //Entity Mapping kısmını entegre edelim.
             modelBuilder.ApplyConfiguration(new BookMap());
         }
     }
