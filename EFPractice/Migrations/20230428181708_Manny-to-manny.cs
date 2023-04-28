@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,11 +8,26 @@
 namespace EFPractice.Migrations
 {
     /// <inheritdoc />
-    public partial class onetoone : Migration
+    public partial class Mannytomanny : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Authors",
+                columns: table => new
+                {
+                    AuthorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Authors", x => x.AuthorId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -47,6 +63,32 @@ namespace EFPractice.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookAuthor",
+                columns: table => new
+                {
+                    BookAuthorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    AuthorId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookAuthor", x => x.BookAuthorId);
+                    table.ForeignKey(
+                        name: "FK_BookAuthor_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "AuthorId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookAuthor_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "BookId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookDetails",
                 columns: table => new
                 {
@@ -54,7 +96,7 @@ namespace EFPractice.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ISSCode = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "0000-000--00-000"),
                     Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddedDate = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "04/28/2023 17:54:28"),
+                    AddedDate = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "04/28/2023 21:17:08"),
                     BookId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -66,6 +108,19 @@ namespace EFPractice.Migrations
                         principalTable: "Books",
                         principalColumn: "BookId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Authors",
+                columns: new[] { "AuthorId", "LastName", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Bozak", "Kubilay" },
+                    { 2, "Kara", "Samet" },
+                    { 3, "Demirbaş", "Buğrahan Çağrı " },
+                    { 4, "Eriç", "Burak" },
+                    { 5, "Söz", "Fatih Mert" },
+                    { 6, "Kökçen", "Yasirhan" }
                 });
 
             migrationBuilder.InsertData(
@@ -90,6 +145,16 @@ namespace EFPractice.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_BookAuthor_AuthorId",
+                table: "BookAuthor",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookAuthor_BookId",
+                table: "BookAuthor",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BookDetails_BookId",
                 table: "BookDetails",
                 column: "BookId",
@@ -105,7 +170,13 @@ namespace EFPractice.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "BookAuthor");
+
+            migrationBuilder.DropTable(
                 name: "BookDetails");
+
+            migrationBuilder.DropTable(
+                name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "Books");

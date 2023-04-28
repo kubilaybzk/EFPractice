@@ -14,6 +14,8 @@
         //navigation property (one-to-one)
         //Her bir kitabın bir tane detay satırı olur.
         public BookDetail BookDetail { get; set; }
+
+        public ICollection<BookAuthor> BookAuthors { get; set; }
     }
 
    
