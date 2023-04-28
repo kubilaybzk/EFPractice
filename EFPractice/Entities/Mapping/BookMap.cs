@@ -17,17 +17,23 @@ namespace EFPractice.Entities.Mapping
             builder.HasData(
                     new Book
                     {
-                        BookId = 2,
-                        Title = "Title"
+                        BookId = 1,
+                        Title = "Title",
+                        CategoryId=1
                     },
                
             new Book
             {
-                BookId = 3,
-                Title = "Title2"
+                BookId = 2,
+                Title = "Title2",
+                CategoryId = 2
             }
               
              );
+
+            builder.HasOne(b => b.Category)
+                .WithMany(c => c.Books)
+                .HasForeignKey(b => b.CategoryId);
 
         }
     }
