@@ -11,10 +11,11 @@ namespace EFPractice.Entities.Mapping
             builder.Property(b => b.CategoryName).HasMaxLength(50).IsRequired().HasDefaultValue("CategoryName");
             builder.Property(b => b.Description).HasMaxLength(100).IsRequired(false).HasDefaultValue("Description");
 
-            builder.HasData(new Category { CategoryId = 1, CategoryName = "Roman", Description = "Test" },
-                new Category { CategoryId = 2, CategoryName = "Hikaye", Description = "HikayeTest" },
-                new Category { CategoryId = 3, CategoryName = "Roman", Description = "RomanTest" },
-                new Category { CategoryId = 4, CategoryName = "Biyografi", Description = "BiyografiTest" }); 
+            builder.HasData(
+                new Category { CategoryId = 1, CategoryName = "Dİl Eğitimi", Description = "Dİl Eğitimi Test" },
+                new Category { CategoryId = 2, CategoryName = "Programlama", Description = "Programlama Test" },
+                new Category { CategoryId = 3, CategoryName = "Roman",       Description = "Roman Test" },
+                new Category { CategoryId = 4, CategoryName = "Biyografi",   Description = "Biyografi Test" }); 
 
 
         }

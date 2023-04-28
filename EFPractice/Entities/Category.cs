@@ -7,6 +7,9 @@
 
         public string Description { get; set; }
 
+
+        //Collection Navigation Property
+        //Her bir kategory birden fazla satıra sahip olsun 
         public ICollection<Book> Books { get; set; }
     }
 }

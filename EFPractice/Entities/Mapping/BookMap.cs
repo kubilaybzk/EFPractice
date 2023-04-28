@@ -15,26 +15,18 @@ namespace EFPractice.Entities.Mapping
             //Aynı zamanda oluşma anında fake datalar oluşturmak istersek onlarıda burada ekleyebiliriz.
 
             builder.HasData(
-                    new Book
-                    {
-                        BookId = 1,
-                        Title = "Title",
-                        CategoryId=1
-                    },
-               
-            new Book
-            {
-                BookId = 2,
-                Title = "Title2",
-                CategoryId = 2
-            }
-              
+             new Book { BookId = 1, Title = "Araba Sevdası", CategoryId = 1},
+             new Book { BookId = 2, Title = "Uçurma Avcısı", CategoryId = 2},
+             new Book { BookId = 3, Title = "C# Dersleri"  , CategoryId = 2}
              );
 
             builder.HasOne(b => b.Category)
                 .WithMany(c => c.Books)
                 .HasForeignKey(b => b.CategoryId);
 
+            //neyin ne ile ilişkisi var .
+            //Kategori'nin Book ile ilişkisi var.
+            //ne ile saplıyor bu ilişkiyi  CategoryId ile.
         }
     }
 }

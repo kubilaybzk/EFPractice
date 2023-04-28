@@ -48,14 +48,55 @@ namespace EFPractice.Migrations
                         {
                             BookId = 1,
                             CategoryId = 1,
-                            Title = "Title"
+                            Title = "Araba Sevdası"
                         },
                         new
                         {
                             BookId = 2,
                             CategoryId = 2,
-                            Title = "Title2"
+                            Title = "Uçurma Avcısı"
+                        },
+                        new
+                        {
+                            BookId = 3,
+                            CategoryId = 2,
+                            Title = "C# Dersleri"
                         });
+                });
+
+            modelBuilder.Entity("EFPractice.Entities.BookDetail", b =>
+                {
+                    b.Property<int>("BookDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookDetailId"));
+
+                    b.Property<string>("AddedDate")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("04/28/2023 17:54:28");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ISSCode")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("0000-000--00-000");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BookDetailId");
+
+                    b.HasIndex("BookId")
+                        .IsUnique();
+
+                    b.ToTable("BookDetails");
                 });
 
             modelBuilder.Entity("EFPractice.Entities.Category", b =>
@@ -87,26 +128,26 @@ namespace EFPractice.Migrations
                         new
                         {
                             CategoryId = 1,
-                            CategoryName = "Roman",
-                            Description = "Test"
+                            CategoryName = "Dİl Eğitimi",
+                            Description = "Dİl Eğitimi Test"
                         },
                         new
                         {
                             CategoryId = 2,
-                            CategoryName = "Hikaye",
-                            Description = "HikayeTest"
+                            CategoryName = "Programlama",
+                            Description = "Programlama Test"
                         },
                         new
                         {
                             CategoryId = 3,
                             CategoryName = "Roman",
-                            Description = "RomanTest"
+                            Description = "Roman Test"
                         },
                         new
                         {
                             CategoryId = 4,
                             CategoryName = "Biyografi",
-                            Description = "BiyografiTest"
+                            Description = "Biyografi Test"
                         });
                 });
 
@@ -119,6 +160,23 @@ namespace EFPractice.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("EFPractice.Entities.BookDetail", b =>
+                {
+                    b.HasOne("EFPractice.Entities.Book", "Book")
+                        .WithOne("BookDetail")
+                        .HasForeignKey("EFPractice.Entities.BookDetail", "BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("EFPractice.Entities.Book", b =>
+                {
+                    b.Navigation("BookDetail")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EFPractice.Entities.Category", b =>

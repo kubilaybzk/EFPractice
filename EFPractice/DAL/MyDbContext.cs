@@ -9,6 +9,8 @@ namespace EFPractice.DAL
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
+        
+        public DbSet<BookDetail> BookDetails { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,6 +22,7 @@ namespace EFPractice.DAL
             //Entity Mapping kısmını entegre edelim.
             modelBuilder.ApplyConfiguration(new BookMap());
             modelBuilder.ApplyConfiguration(new CategoryMap());
+            modelBuilder.ApplyConfiguration(new BookDetailMap());
         }
     }
 }
