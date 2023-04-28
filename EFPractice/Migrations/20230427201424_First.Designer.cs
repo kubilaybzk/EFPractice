@@ -3,6 +3,7 @@ using EFPractice.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFPractice.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230427201424_First")]
+    partial class First
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,6 @@ namespace EFPractice.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -39,21 +39,17 @@ namespace EFPractice.Migrations
 
                     b.HasKey("BookId");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Books");
 
                     b.HasData(
                         new
                         {
-                            BookId = 1,
-                            CategoryId = 1,
+                            BookId = 2,
                             Title = "Title"
                         },
                         new
                         {
-                            BookId = 2,
-                            CategoryId = 2,
+                            BookId = 3,
                             Title = "Title2"
                         });
                 });
@@ -108,22 +104,6 @@ namespace EFPractice.Migrations
                             CategoryName = "Biyografi",
                             Description = "BiyografiTest"
                         });
-                });
-
-            modelBuilder.Entity("EFPractice.Entities.Book", b =>
-                {
-                    b.HasOne("EFPractice.Entities.Category", "Category")
-                        .WithMany("Books")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("EFPractice.Entities.Category", b =>
-                {
-                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,16 +8,18 @@ namespace EFPractice.DAL
     public class MyDbContext:DbContext
     {
         public DbSet<Book> Books { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=192.168.16.94;Initial Catalog=EFPractice;User ID=SA;Password=Password123;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Data Source=192.168.1.131;Initial Catalog=EFPractice;User ID=SA;Password=Password123;TrustServerCertificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Entity Mapping kısmını entegre edelim.
             modelBuilder.ApplyConfiguration(new BookMap());
+            modelBuilder.ApplyConfiguration(new CategoryMap());
         }
     }
 }
